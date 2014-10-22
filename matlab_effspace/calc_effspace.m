@@ -1,4 +1,5 @@
 % A visualisation of planar velocity efficiency info for mecanum wheeled robots
+addpath('~/MasterThesis/3_dev/matlab_utils')
 
 % VALUES
 l = 1.5;  %m  length of the robot (wheel base)
@@ -29,7 +30,7 @@ figure
 mesh(x,y,maxi);
 hold on
 plot3(wheels(:,1), wheels(:,2), ones(length(wheels(:,1)),1),'bx');
-name = strcat("plot_", strftime ("%y%m%d_%H%M%S", localtime (time ())), ".png")
-print('dpng', name)
+CH_save_plot;
+
 
 
