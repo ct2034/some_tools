@@ -1,3 +1,8 @@
+# OWN
+csch/*
+*~
+*.m
+
 # Object files
 *.o
 *.ko

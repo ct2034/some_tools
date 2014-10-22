@@ -1,0 +1,25 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+X = 9+y;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y = 8*x;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([%o1, %o2], [X, y]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([%o1, %o2], [X, x]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([%o1, %o2], [x, y]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
