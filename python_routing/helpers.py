@@ -1,4 +1,4 @@
-# Function to check weather a straight line between two points is free
+# Function to check whether a straight line between two points is free
 def check_line(map, s, e):
   pixel = s
   slope = (e[1]-s[1])/(e[0]-s[0])
