@@ -1,6 +1,8 @@
 # OWN
 csch/*
 *~
+octave-core
+*.pyc
 
 # Object files
 *.o
