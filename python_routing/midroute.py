@@ -18,6 +18,9 @@ arr_obstacles = np.array(helpers.check_line(map, pstart, pend))
 
 print arr_obstacles
 
+for obst in arr_obstacles:
+  helpers.get_midpoint(map, obst, [0,0])
+
 # DISPLAY
 fig, axes = plt.subplots(1, 1);
 axes.imshow(map);
