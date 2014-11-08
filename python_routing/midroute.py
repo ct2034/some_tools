@@ -14,7 +14,9 @@ route = []
 route.append(pstart);
 route.append(pend);
 arr_route = np.array(route)
-print helpers.check_line(map, pstart, pend)
+arr_obstacles = np.array(helpers.check_line(map, pstart, pend))
+
+print arr_obstacles
 
 # DISPLAY
 fig, axes = plt.subplots(1, 1);
@@ -22,7 +24,10 @@ axes.imshow(map);
 axes.plot(pstart[0], pstart[1], 'rx');
 axes.plot(pend[0], pend[1], 'gx');
 axes.plot(arr_route[:,0], arr_route[:,1], 'b-');
+#axes.plot(arr_obstacles[:,0], arr_obstacles[:,1], 'bx');
+
 fig.show();
-wait()
+raw_input('Please press enter ... ');
+
 
 
