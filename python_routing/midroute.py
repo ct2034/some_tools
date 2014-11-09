@@ -8,6 +8,7 @@ import helpers
 map = sp.misc.imread('map.png')
 pstart = [14, 87];
 pend = [90, 85];
+max_coors = [100, 100];
 
 # ROUTE
 route = []
@@ -19,7 +20,7 @@ arr_obstacles = np.array(helpers.check_line(map, pstart, pend))
 print arr_obstacles
 
 for obst in arr_obstacles:
-  helpers.get_midpoint(map, obst, [0,0])
+  helpers.get_midpoint(map, obst, max_coords)
 
 # DISPLAY
 fig, axes = plt.subplots(1, 1);

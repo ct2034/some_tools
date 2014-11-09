@@ -24,13 +24,28 @@ def check_line(map, s, e):
   
 # Function to find the midpoints for a given obstacle
 def get_midpoint(map, obs, max_coords):
-  slope = float(float(obs[1,1])-obs[0,1])/(obs[1,0]-obs[0,0])
-  line = [float(obs[0,1])-slope*obs[0,0], slope]
+  middle = [(float(obs[0,0]))+(obs[1,0]-obs[0,0])/2, (float(obs[0,1]))+(obs[1,1]-obs[0,1])/2]
+  #print middle
+  
+  [line, dire] = get_line(obs[0], obs[1])
+  
+  if line[1] == 0:
+    vert_line = [0, float('inf')]
+  else:
+    vert_slope = 1 / line[1]
+    vert_y = float(middle[1])-vert_slope*middle[0]
+    vert_line = [vert_y, vert_slope]
+  print vert_line
   print line
   
-  middle = [(float(obs[0,0]))+(obs[1,0]-obs[0,0])/2, (float(obs[0,1]))+(obs[1,1]-obs[0,1])/2]
-  print middle
+  if dire[0] > 0:
+    value = (float(max_coord[0]) * vert_line[1] + vert_line[0]
+    if dire[1] > 0:
+      if value > max_coord[1]:
+        end = 
   
+  get_edeg(map, vert_line, dire, middle, 
+   
   return
   
 # Function returns an edge from walking a linear function discretely
@@ -60,7 +75,7 @@ def get_edge(map, line, dire, s, e):
   
   return []
       
-# Function to get a line and directions from two points
+# Function to get line parameters and directions from two points
 def get_line(s, e):
   if s[0] == e[0]:
     line = [0, float('inf')] #vertical line
