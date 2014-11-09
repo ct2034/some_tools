@@ -42,9 +42,9 @@ def get_midpoint(map, obs, max_coords):
     value = (float(max_coord[0]) * vert_line[1] + vert_line[0]
     if dire[1] > 0:
       if value > max_coord[1]:
-        end = 
+        end = [blabla, max_coord[1]]
   
-  get_edeg(map, vert_line, dire, middle, 
+  get_edge(map, vert_line, dire, middle, 
    
   return
   
