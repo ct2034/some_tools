@@ -109,7 +109,7 @@ def get_edge(map, line, dire, s, e):
     else:
       value = (float(pixel[0])+.5*dire[0]) * float(line[1]) + float(line[0])
       
-      if ((value - (pixel[1]+(.5*dire[1]))) * 1 ) > 0: #line continues horizontal
+      if ((value - (pixel[1]+(.5*dire[1]))) ) > 0: #line continues horizontal
         pixel[0]=pixel[0]+dire[0]
       else: #line continues vertical
         pixel[1]=pixel[1]+dire[1]
