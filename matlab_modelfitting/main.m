@@ -2,4 +2,4 @@ clear all
 
 loadData
 modelFitting
-% printData
+printData

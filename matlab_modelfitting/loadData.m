@@ -9,7 +9,6 @@ X = zeros(n,6);
 
 y = sum(current(:,2:5)')';
 X(:,1:3) = abs(velocity);
-xax = [min(velocity):max(velocity)];
 
 acceleration = zeros(n,3);
 for i = [2:n]
