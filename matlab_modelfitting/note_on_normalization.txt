@@ -1,0 +1,7 @@
+normalize:
+
+	val_norm = (VAL - mu) / sigma
+
+way back:
+
+	val = VAL_NORM * sigma + mu

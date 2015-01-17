@@ -1,5 +1,4 @@
 disp 'print ..'
-close all
 
 %% show the data
 % ---------------------------------------------------------------------
@@ -16,6 +15,9 @@ title('Velocitys')
 
 %% show model
 % ---------------------------------------------------------------------
+theta
+theta = deNormalize(theta, mu, sigm)
+
 figure
 
 subplot(3,2,1) % v_x
