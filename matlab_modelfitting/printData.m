@@ -26,7 +26,7 @@ for f = [1:6]
 	hold on
 
 	% linear
-	xax = [min(x):max(x)];
+	xax = [min(x):abs(max(x)-min(x))/100:max(x)];
 	liney_norm = 0;
 	liney_norm = polyval([theta(f+1), theta(1)], xax);
 	liney = 0;
@@ -34,11 +34,11 @@ for f = [1:6]
 	plot(xax, liney, 'r-');
 
 	% 3 poly
-	liney_norm3 = 0;
-	liney_norm3 = polyval([theta3(4+(f-1)*3), theta3(3+(f-1)*3), theta3(2+(f-1)*3), theta3(1)], xax);
-	liney3 = 0;
-	liney3 = normalize(liney_norm', mu3(f+3), sigm3(f+3)) + mu(1);
-	plot(xax, liney3, 'k-');
+	% liney_norm3 = 0;
+	% liney_norm3 = polyval([theta3(4+(f-1)*3), theta3(3+(f-1)*3), theta3(2+(f-1)*3), theta3(1)], xax);
+	% liney3 = 0;
+	% liney3 = normalize(liney_norm', mu3(2+(f-1)*3), sigm3(2+(f-1)*3)) + mu(1);
+	% plot(xax, liney3, 'k-');
 
 	%annotations
 	switch (f)
