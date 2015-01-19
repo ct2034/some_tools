@@ -6,7 +6,7 @@ X_den = X;
 		if sigma(i) == 0
 			X_den(:,i) = X(:,i) + mu(i);
 		else	
-			X_den(:,i) = X(:,i) * sigma(i) + mu(i);
+			X_den(:,i) = (X(:,i) * sigma(i) + mu(i)) / ;
 		end
 	end
 

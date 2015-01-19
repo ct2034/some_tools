@@ -1,6 +1,8 @@
 normalize:
 
-	val_norm = (VAL - mu) / sigma
+			   VAL - mu
+	val_norm = -------- 
+				 sigma
 
 way back:
 
