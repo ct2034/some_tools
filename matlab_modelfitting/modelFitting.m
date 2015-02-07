@@ -24,6 +24,8 @@ hold on;
 ypos =  max(min(J_history)) + (max(max(J_history)) - min(min(J_history))) * .05;
 text(.75*num_iters, ypos, sprintf('min: %.4f', max(min(J_history))));
 
+deNormalize(theta, mu, sigm) 
+
 %% 3 poly model
 % ---------------------------------------------------------------------
 if poly3

@@ -31,7 +31,9 @@ def plotStats(datdict):
 	for i in range(len(params)):
 		data = []
 		names = []
-		for k in datdict.keys()	:
+		keyz = datdict.keys()
+		keyz.sort()
+		for k in keyz:
 			l = datdict[k]
 			rd = [] # route data
 			for r in l:
@@ -40,7 +42,8 @@ def plotStats(datdict):
 			names.append(k)
 
 		sax.append(stat_fig.add_subplot(131 + i))
-		plt.xticks([1, 2], names)
+		rang = range(1, len(names) + 1)
+		plt.xticks(rang, names)
 		plt.title(params[i])
 		sax[i].boxplot(data)
 
@@ -63,6 +66,13 @@ datagroups = {
 			{"start_time": {"$lt": datetime.datetime(2015, 2, 7)}},
 			{"Length [m]": {"$gt": 5}},
 			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+		]}, 
+	"EDWA v0.8": # hint: 0.8 wg 8th feb
+		{"$and": [
+			{"start_time": {"$gt": datetime.datetime(2015, 2, 8)}},
+			{"start_time": {"$lt": datetime.datetime(2015, 2, 9)}},
+			{"Length [m]": {"$gt": 5}},
+			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
 		]}
 }
 
@@ -74,6 +84,7 @@ groups = {}
 
 keyz = datagroups.keys()
 keyz.sort()
+print keyz
 for gr in keyz:
 	routes = []
 	print gr + "========================================"
