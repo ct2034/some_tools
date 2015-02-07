@@ -21,7 +21,7 @@ for f = [1:6]
 	subplot(3,2,f)
 	
 	% data
-	x = X3(:,2+(f-1)*3);
+	x = X(:,f+1);
 	plot(x, y, 'bx');
 	hold on
 
@@ -34,11 +34,13 @@ for f = [1:6]
 	plot(xax, liney, 'r-');
 
 	% 3 poly
-	% liney_norm3 = 0;
-	% liney_norm3 = polyval([theta3(4+(f-1)*3), theta3(3+(f-1)*3), theta3(2+(f-1)*3), theta3(1)], xax);
-	% liney3 = 0;
-	% liney3 = normalize(liney_norm', mu3(2+(f-1)*3), sigm3(2+(f-1)*3)) + mu(1);
-	% plot(xax, liney3, 'k-');
+	if poly3
+		liney_norm3 = 0;
+		liney_norm3 = polyval([theta3(4+(f-1)*3), theta3(3+(f-1)*3), theta3(2+(f-1)*3), theta3(1)], xax);
+		liney3 = 0;
+		liney3 = normalize(liney_norm', mu3(2+(f-1)*3), sigm3(2+(f-1)*3)) + mu(1);
+		plot(xax, liney3, 'k-');
+	end
 
 	%annotations
 	switch (f)
