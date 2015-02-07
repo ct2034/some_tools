@@ -49,7 +49,7 @@ def plotStats(datdict):
 client = m.MongoClient('mongodb://localhost:27017/')
 db = client.nav_analysis
 collection = db['trips']
-d = datetime.datetime(2015, 01, 01) 				# from date
+d = datetime.datetime(2015, 02, 06) 				# from date
 
 first = 1
 dwa_routes = []
@@ -61,10 +61,10 @@ stat_fig = plt.figure()
 
 for trip in collection.find(
 	{"$and": [
-		{"start_time": {"$gt": d}}, 
-		{"Length [m]": {"$gt": 1}}
-	]}):
-	# print toString(trip)
+		{"start_time": {"$gt": d}},
+		{"Length [m]": {"$gt": 5}}
+	]}).sort("start_time"):
+	print toString(trip)
 	# show first route
 	# if first:
 	# 	first = 0
