@@ -44,38 +44,49 @@ def plotStats(datdict):
 		plt.title(params[i])
 		sax[i].boxplot(data)
 
-# -------------
+# --------------------------------------------------------------------------------------------------------
 
 client = m.MongoClient('mongodb://localhost:27017/')
 db = client.nav_analysis
 collection = db['trips']
-d = datetime.datetime(2015, 02, 06) 				# from date
 
-first = 1
-dwa_routes = []
-edwa_routes = []
+datagroups = {
+	"DWA": 
+		{"$and": [
+			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
+			{"Length [m]": {"$gt": 5}},
+			{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}}
+		]}, 
+	"EDWA v0.6": # hint: 0.6 wg 6th feb
+		{"$and": [
+			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
+			{"start_time": {"$lt": datetime.datetime(2015, 2, 7)}},
+			{"Length [m]": {"$gt": 5}},
+			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+		]}
+}
 
 # plot
 route_fig = plt.figure()
 stat_fig = plt.figure()
 
-for trip in collection.find(
-	{"$and": [
-		{"start_time": {"$gt": d}},
-		{"Length [m]": {"$gt": 5}}
-	]}).sort("start_time"):
-	print toString(trip)
-	# show first route
-	# if first:
-	# 	first = 0
-	plotRoute(trip["covered_route"])
-	# decide which local planner was used
-	setup = cleanSetup(str(trip["Planner Setup"]))
-	if "dwa_local_planner/DWAPlannerROS" in setup:
-		dwa_routes.append(trip)
-	if "edwa_local_planner/EDWAPlannerROS" in setup:
-		edwa_routes.append(trip)
-plotStats({"DWA": dwa_routes, "EDWA": edwa_routes})
+groups = {}
+
+keyz = datagroups.keys()
+keyz.sort()
+for gr in keyz:
+	routes = []
+	print gr + "========================================"
+	for trip in collection.find(datagroups[gr]).sort("start_time"):
+		print toString(trip)
+		routes.append(trip)
+	groups[gr] = routes
+	print "count: " + str(collection.find(datagroups[gr]).count())
+
+print "==============================================="
+
+
+plotStats(groups)
 
 # route_fig.show()
 stat_fig.show()
