@@ -81,7 +81,7 @@ for gr in keyz:
 		print toString(trip)
 		routes.append(trip)
 	groups[gr] = routes
-	print "count: " + str(collection.find(datagroups[gr]).count())
+	print " count: " + str(collection.find(datagroups[gr]).count())
 
 print "==============================================="
 
