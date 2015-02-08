@@ -10,7 +10,10 @@ def toString(document):
 	setup = cleanSetup(str(document["Planner Setup"]))
 	return ("t:" + str(document["start_time"]) 
 	  + " || l:" + length 
-	  + " || s:" + setup)
+#	  + " || s:" + setup
+#	  + " || g:" + str(document["Goal [m, m, rad]"])
+	  + " || c: %06.2f" % document["Current [As]"]
+    )
 
 def cleanSetup(setup):
 	setup = setup.replace("\n", "")
@@ -25,7 +28,7 @@ def plotRoute(route):
 	rax.plot(routearr[:,0], routearr[:,1])
 
 def plotStats(datdict):
-	params = ["Current [As]", "Length [m]", "Duration [ms]"]
+	params = ["Current [As]", "Length [m]", "Rotation [rad]", "Duration [ms]"]
 	sax = []
 
 	for i in range(len(params)):
@@ -41,12 +44,17 @@ def plotStats(datdict):
 			data.append(rd)
 			names.append(k)
 
-		sax.append(stat_fig.add_subplot(131 + i))
+		sax.append(stat_fig.add_subplot(141 + i))
 		rang = range(1, len(names) + 1)
-		plt.xticks(rang, names)
+		plt.xticks(rang, names, rotation=90)
 		plt.title(params[i])
 		sax[i].boxplot(data)
-
+		for j in range(len(keyz)):
+			sax[i].text(j+1, np.mean(data[j]), 
+				"%.2f" % np.mean(data[j]), 
+				fontsize=6, 
+				style='oblique',
+				horizontalalignment='center')
 # --------------------------------------------------------------------------------------------------------
 
 client = m.MongoClient('mongodb://localhost:27017/')
@@ -70,10 +78,37 @@ datagroups = {
 	"EDWA v0.8": # hint: 0.8 wg 8th feb
 		{"$and": [
 			{"start_time": {"$gt": datetime.datetime(2015, 2, 8)}},
-			{"start_time": {"$lt": datetime.datetime(2015, 2, 9)}},
+			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12)}},
 			{"Length [m]": {"$gt": 5}},
 			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+		]}, 
+	"EDWA v0.81": # with new model params and fabs for vel
+		{"$and": [
+			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12)}},
+			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12, 50)}},
+			{"Length [m]": {"$gt": 5}},
+			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+		]}, 
+	"EDWA v0.82": # with path distance bias = 64
+		{"$and": [
+			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12, 50)}},
+			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 14, 05)}},
+			{"Length [m]": {"$gt": 5}},
+			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+      {"Success": {"$gt": 0}}
+		]},  
+	"EDWA v0.83": # increased roational parameters
+		{"$and": [
+			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 14, 05)}},
+			{"start_time": {"$lt": datetime.datetime(2015, 2, 9)}},
+			{"Length [m]": {"$gt": 5}},
+			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+      {"Success": {"$gt": 0}}
 		]}
+#  "to right" :
+#    {"Goal [m, m, rad]": [0.5, 3.0, 1.5707963705062866]},
+#  "to left" :
+#    {"Goal [m, m, rad]": [2, -4, 0]}
 }
 
 # plot
@@ -87,7 +122,7 @@ keyz.sort()
 print keyz
 for gr in keyz:
 	routes = []
-	print gr + "========================================"
+	print gr + " ========================================"
 	for trip in collection.find(datagroups[gr]).sort("start_time"):
 		print toString(trip)
 		routes.append(trip)
