@@ -40,8 +40,14 @@ def plotStats(datdict):
 			l = datdict[k]
 			rd = [] # route data
 			for r in l:
-				rd.append(r[params[i]])
+				if params[i] is "Duration [ms]":
+					vals = (np.array(r[params[i]])/1000).tolist()
+					rd.append(vals)
+				else:
+					rd.append(r[params[i]])
 			data.append(rd)
+			if k is "Duration [ms]":
+				k = "Duration [s]"
 			names.append(k)
 
 		sax.append(stat_fig.add_subplot(141 + i))
@@ -52,8 +58,8 @@ def plotStats(datdict):
 		for j in range(len(keyz)):
 			sax[i].text(j+1, np.mean(data[j]), 
 				"%.2f" % np.mean(data[j]), 
-				fontsize=6, 
-				style='oblique',
+				fontsize=7, 
+				color='#990000',
 				horizontalalignment='center')
 # --------------------------------------------------------------------------------------------------------
 
@@ -68,20 +74,20 @@ datagroups = {
 			{"Length [m]": {"$gt": 5}},
 			{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}}
 		]}, 
-	"EDWA v0.6": # hint: 0.6 wg 6th feb
-		{"$and": [
-			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
-			{"start_time": {"$lt": datetime.datetime(2015, 2, 7)}},
-			{"Length [m]": {"$gt": 5}},
-			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
-		]}, 
-	"EDWA v0.8": # hint: 0.8 wg 8th feb
-		{"$and": [
-			{"start_time": {"$gt": datetime.datetime(2015, 2, 8)}},
-			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12)}},
-			{"Length [m]": {"$gt": 5}},
-			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
-		]}, 
+#	"EDWA v0.6": # hint: 0.6 wg 6th feb
+#		{"$and": [
+#			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
+#			{"start_time": {"$lt": datetime.datetime(2015, 2, 7)}},
+#			{"Length [m]": {"$gt": 5}},
+#			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+#		]}, 
+#	"EDWA v0.8": # hint: 0.8 wg 8th feb
+#		{"$and": [
+#			{"start_time": {"$gt": datetime.datetime(2015, 2, 8)}},
+#			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12)}},
+#			{"Length [m]": {"$gt": 5}},
+#			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+#		]}, 
 	"EDWA v0.81": # with new model params and fabs for vel
 		{"$and": [
 			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12)}},
