@@ -67,55 +67,95 @@ client = m.MongoClient('mongodb://localhost:27017/')
 db = client.nav_analysis
 collection = db['trips']
 
-datagroups = {
-	"DWA": 
-		{"$and": [
-			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
-			{"Length [m]": {"$gt": 5}},
-			{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}}
-		]}, 
-#	"EDWA v0.6": # hint: 0.6 wg 6th feb
-#		{"$and": [
-#			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
-#			{"start_time": {"$lt": datetime.datetime(2015, 2, 7)}},
-#			{"Length [m]": {"$gt": 5}},
-#			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
-#		]}, 
-#	"EDWA v0.8": # hint: 0.8 wg 8th feb
-#		{"$and": [
-#			{"start_time": {"$gt": datetime.datetime(2015, 2, 8)}},
-#			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12)}},
-#			{"Length [m]": {"$gt": 5}},
-#			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
-#		]}, 
-	"EDWA v0.81": # with new model params and fabs for vel
-		{"$and": [
-			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12)}},
-			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12, 50)}},
-			{"Length [m]": {"$gt": 5}},
-			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
-		]}, 
-	"EDWA v0.82": # with path distance bias = 64
-		{"$and": [
-			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12, 50)}},
-			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 14, 05)}},
-			{"Length [m]": {"$gt": 5}},
-			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
-      {"Success": {"$gt": 0}}
-		]},  
-	"EDWA v0.83": # increased roational parameters
-		{"$and": [
-			{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 14, 05)}},
-			{"start_time": {"$lt": datetime.datetime(2015, 2, 9)}},
-			{"Length [m]": {"$gt": 5}},
-			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
-      {"Success": {"$gt": 0}}
-		]}
-#  "to right" :
-#    {"Goal [m, m, rad]": [0.5, 3.0, 1.5707963705062866]},
-#  "to left" :
-#    {"Goal [m, m, rad]": [2, -4, 0]}
-}
+datgroupnr = 3
+
+if datgroupnr is 1:
+	datagroups = {
+		"DWA": 
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}}
+			]}, 
+	#	"EDWA v0.6": # hint: 0.6 wg 6th feb
+	#		{"$and": [
+	#			{"start_time": {"$gt": datetime.datetime(2015, 2, 6)}},
+	#			{"start_time": {"$lt": datetime.datetime(2015, 2, 7)}},
+	#			{"Length [m]": {"$gt": 5}},
+	#			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+	#		]}, 
+	#	"EDWA v0.8": # hint: 0.8 wg 8th feb
+	#		{"$and": [
+	#			{"start_time": {"$gt": datetime.datetime(2015, 2, 8)}},
+	#			{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12)}},
+	#			{"Length [m]": {"$gt": 5}},
+	#			{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+	#		]}, 
+		"EDWA v0.81": # with new model params and fabs for vel
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 12, 50)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}}
+			]}, 
+		"EDWA v0.82": # with path distance bias = 64
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 12, 50)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 8, 14, 05)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},  
+		"EDWA v0.83": # increased roational parameters
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 8, 14, 05)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 9)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]}
+	}
+if datgroupnr is 2:
+	datagroups = {
+		"to right" :
+	    {"Goal [m, m, rad]": [0.5, 3.0, 1.5707963705062866]},
+	  "to left" :
+	    {"Goal [m, m, rad]": [2, -4, 0]}
+	}
+if datgroupnr is 3:
+	datagroups = {
+		"DWA":  #new planner config 
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 9)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
+		"EDWA v0.9": #new planner config 
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 9)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 9, 18, 30)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
+		"EDWA v0.91": #fabs for all accelerations
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 9, 18, 30)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 9, 18, 55)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
+		"EDWA v0.92": # valuing traj cost more
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 9, 18, 55)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 10)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]}
+  }
 
 # plot
 route_fig = plt.figure()
