@@ -17,47 +17,62 @@ title('Velocitys')
 % ---------------------------------------------------------------------
 figure
 
-for f = [1:6]
-	subplot(3,2,f)
+% for f = [1:6]
+% 	subplot(3,2,f)
 	
-	% data
-	x = X(:,f+1);
-	plot(x, y, 'bx');
-	hold on
+% 	% data
+% 	x = X(:,f+1);
+% 	plot(x, y, 'bx');
+% 	hold on
 
-	% linear
-	xax = [min(x):abs(max(x)-min(x))/100:max(x)];
-	liney_norm = 0;
-	liney_norm = polyval([theta(f+1), theta(1)], xax);
-	liney = 0;
-	liney = normalize(liney_norm', mu(f+1), sigm(f+1)) + mu(1);
-	plot(xax, liney, 'r-');
+% 	% linear
+% 	xax = [min(x):abs(max(x)-min(x))/100:max(x)];
+% 	liney_norm = 0;
+% 	liney_norm = polyval([theta(f+1), theta(1)], xax);
+% 	liney = 0;
+% 	liney = normalize(liney_norm', mu(f+1), sigm(f+1)) + 1;
+% 	plot(xax, liney, 'r-');
 
-	% 3 poly
-	if poly3
-		liney_norm3 = 0;
-		liney_norm3 = polyval([theta3(4+(f-1)*3), theta3(3+(f-1)*3), theta3(2+(f-1)*3), theta3(1)], xax);
-		liney3 = 0;
-		liney3 = normalize(liney_norm', mu3(2+(f-1)*3), sigm3(2+(f-1)*3)) + mu(1);
-		plot(xax, liney3, 'k-');
-	end
+% 	% 3 poly
+% 	if poly3
+% 		liney_norm3 = 0;
+% 		liney_norm3 = polyval([theta3(4+(f-1)*3), theta3(3+(f-1)*3), theta3(2+(f-1)*3), theta3(1)], xax);
+% 		liney3 = 0;
+% 		liney3 = normalize(liney_norm', mu3(2+(f-1)*3), sigm3(2+(f-1)*3)) + mu(1);
+% 		plot(xax, liney3, 'k-');
+% 	end
 
-	%annotations
-	switch (f)
-		case 1
-			title('v_x');
-		case 2
-			title('v_y');
-		case 3
-			title('v_{th}');
-		case 4
-			title('a_x');
-		case 5
-			title('a_y');
-		case 6
-			title('a_{th}');
-	end
+% 	%annotations
+% 	switch (f)
+% 		case 1
+% 			title('v_x');
+% 		case 2
+% 			title('v_y');
+% 		case 3
+% 			title('v_{th}');
+% 		case 4
+% 			title('a_x');
+% 		case 5
+% 			title('a_y');
+% 		case 6
+% 			title('a_{th}');
+% 	end
 
-	legend(['data'; 'linear model'; '3 poly model'])
-end
+% 	legend(['data'; 'linear model'; '3 poly model'])
+% end
 
+% data
+f = 2;
+x = X(:,f+1);
+plot(x, y, 'bx');
+hold on
+
+% linear
+xax = [min(x):abs(max(x)-min(x))/2:max(x)];
+liney_norm = 0;
+liney_norm = polyval([theta(f+1), theta(1)], xax);
+liney = 0;
+liney = normalize(liney_norm', mu(f+1), sigm(f+1)) + 2;
+plot(xax, liney, 'r-');
+
+CH_save_plot 

@@ -5,7 +5,7 @@ function [X_norm, mu, sigma] = featureNormalize(X)
 	sigma = zeros(1, size(X, 2));
 	  
 	for i = 1:size(X, 2)
-		mu(i) = mean(X(:,i));
+		mu(i) = 0;%mean(X(:,i));
 		sigma(i) = std(X(:,i));
 		if sigma(i) == 0
 			X_norm(:,i) = X(:,i) - mu(i);

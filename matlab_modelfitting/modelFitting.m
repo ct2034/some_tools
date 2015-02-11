@@ -5,7 +5,7 @@ theta = zeros(size(X, 2), 1);
 
 %% linear model
 % ---------------------------------------------------------------------
-num_iters = 5000;
+num_iters = 1000;
 alpha = .01;
 
 if y4
@@ -40,4 +40,4 @@ if poly3
 	legend(['linear model learning curve'; '3 poly model learning curve'])
 end	
 
-CH_save_plot 
+% CH_save_plot 

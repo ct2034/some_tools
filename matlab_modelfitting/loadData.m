@@ -1,4 +1,6 @@
-fname = '2014-12-21-12-40-46.mat';
+% fname = '2014-12-21-12-40-46.mat';
+% fname = '2014-12-21-12-34-28.mat';
+fname = '2014-12-21-12-26-22.mat';
 
 disp 'loading ...'
 disp(fname)
@@ -24,15 +26,13 @@ for i = [2:n]
 	acceleration(i,:) = X(i,:) - X(i-1,:);
 end
 
-X = [X, acceleration];
+X = [X, abs(acceleration)];
 
 if y4
 	X = [abs(X(:,1:7)), X(:,8:14)]; 
 else
 	X = [abs(X(:,1:3)), X(:,4:6)]; 
 end
-
-X = [ones(n,1), X];
 
 [X_norm, mu, sigm] = featureNormalize(X);
 
@@ -63,6 +63,9 @@ if poly3
 
 	[X3_norm, mu3, sigm3] = featureNormalize(X3);
 end
+
+X = [ones(n,1), X];
+X_norm = [ones(n,1), X_norm];
 
 disp '...'
 disp 'y = current | X = ones / velocity / acceleration'
