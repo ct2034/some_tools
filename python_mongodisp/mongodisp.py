@@ -67,7 +67,7 @@ client = m.MongoClient('mongodb://localhost:27017/')
 db = client.nav_analysis
 collection = db['trips']
 
-datgroupnr = 3
+datgroupnr = 4
 
 if datgroupnr is 1:
 	datagroups = {
@@ -127,6 +127,7 @@ if datgroupnr is 3:
 		"DWA":  #new planner config 
 			{"$and": [
 				{"start_time": {"$gt": datetime.datetime(2015, 2, 9)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 10)}},
 				{"Length [m]": {"$gt": 5}},
 				{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}},
 		    {"Success": {"$gt": 0}}
@@ -154,7 +155,50 @@ if datgroupnr is 3:
 				{"Length [m]": {"$gt": 5}},
 				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
 		    {"Success": {"$gt": 0}}
+			]},
+		"EDWA v0.99": # new map
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 10)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 10, 11)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
+		"EDWA v0.991": # caring even more for trajectory
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 10, 11)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 10, 11, 20)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
 			]}
+	}
+if datgroupnr is 4:
+	datagroups = {
+		"DWA":  #new goals / plan
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 10)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 10, 11, 50)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
+		"EDWA v0.992": # lower traj_scale, lower self_scale
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 10, 11, 20)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 11)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
+		"DWA_fast":  #new goals / plan
+			{"$and": [
+				{"start_time": {"$gt": datetime.datetime(2015, 2, 10, 11, 50)}},
+				{"start_time": {"$lt": datetime.datetime(2015, 2, 11)}},
+				{"Length [m]": {"$gt": 5}},
+				{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}},
+		    {"Success": {"$gt": 0}}
+			]},
   }
 
 # plot
