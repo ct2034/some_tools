@@ -46,21 +46,19 @@ def plotStats(datdict):
 				else:
 					rd.append(r[params[i]])
 			data.append(rd)
-			if k is "Duration [ms]":
-				k = "Duration [s]"
 			names.append(k)
 
 		sax.append(stat_fig.add_subplot(141 + i))
 		rang = range(1, len(names) + 1)
 		plt.xticks(rang, names, rotation=90)
-		plt.title(params[i])
+		if params[i] is "Duration [ms]":
+			plt.title("Duration [s]")
+		else:
+			plt.title(params[i])
 		sax[i].boxplot(data)
+		print params[i]
 		for j in range(len(keyz)):
-			sax[i].text(j+1, np.mean(data[j]), 
-				"%.2f" % np.mean(data[j]), 
-				fontsize=7, 
-				color='#990000',
-				horizontalalignment='center')
+			print np.mean(data[j])
 # --------------------------------------------------------------------------------------------------------
 
 client = m.MongoClient('mongodb://localhost:27017/')
@@ -175,15 +173,15 @@ if datgroupnr is 3:
 	}
 if datgroupnr is 4:
 	datagroups = {
-		"DWA":  #new goals / plan
-			{"$and": [
-				{"start_time": {"$gt": datetime.datetime(2015, 2, 10)}},
-				{"start_time": {"$lt": datetime.datetime(2015, 2, 10, 11, 50)}},
-				{"Length [m]": {"$gt": 5}},
-				{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}},
-		    {"Success": {"$gt": 0}}
-			]},
-		"EDWA v0.992": # lower traj_scale, lower self_scale
+		# "DWA":  #new goals / plan
+		# 	{"$and": [
+		# 		{"start_time": {"$gt": datetime.datetime(2015, 2, 10)}},
+		# 		{"start_time": {"$lt": datetime.datetime(2015, 2, 10, 11, 50)}},
+		# 		{"Length [m]": {"$gt": 5}},
+		# 		{"Planner Setup": {"$regex" : "dwa_local_planner/DWAPlannerROS"}},
+		#     {"Success": {"$gt": 0}}
+		# 	]},
+		"EDWA": # lower traj_scale, lower self_scale
 			{"$and": [
 				{"start_time": {"$gt": datetime.datetime(2015, 2, 10, 11, 20)}},
 				{"start_time": {"$lt": datetime.datetime(2015, 2, 11)}},
@@ -191,7 +189,7 @@ if datgroupnr is 4:
 				{"Planner Setup": {"$regex" : "edwa_local_planner/EDWAPlannerROS"}},
 		    {"Success": {"$gt": 0}}
 			]},
-		"DWA_fast":  #new goals / plan
+		"DWA":  #new goals / plan
 			{"$and": [
 				{"start_time": {"$gt": datetime.datetime(2015, 2, 10, 11, 50)}},
 				{"start_time": {"$lt": datetime.datetime(2015, 2, 11)}},
