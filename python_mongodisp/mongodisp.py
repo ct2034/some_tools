@@ -53,6 +53,8 @@ def plotStats(datdict):
 		plt.xticks(rang, names, rotation=90)
 		if params[i] is "Duration [ms]":
 			plt.title("Duration [s]")
+		elif params[i] is "Current [As]":
+			plt.title("Charge [As]")
 		else:
 			plt.title(params[i])
 		sax[i].boxplot(data)
