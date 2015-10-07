@@ -8,8 +8,8 @@ before_install:
   - sudo apt-get install -y $(cat requirements_apt.txt | tr "\n" " ")
 
 # install python deps
-install: 
-  - pip install -r requirements_py.txt"
+#install: 
+#  - pip install -r requirements_py.txt"
 
 # command to run tests
 script: py.test
