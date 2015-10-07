@@ -3,7 +3,9 @@ python:
   - "2.7"
 
 # command to install dependencies
-install: "pip install -r requirements_py.txt"
+install: 
+  - pip install .
+  - pip install -r requirements_py.txt"
 
 # command to run tests
 script: py.test
