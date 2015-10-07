@@ -2,9 +2,13 @@ language: python
 python:
   - "2.7"
 
-# command to install dependencies
+# install system deps
+before_install:
+	- sudo apt-get update -qq
+	- sudo apt-get install -qq equirements_apt.txt
+
+# install python deps
 install: 
-  - pip install .
   - pip install -r requirements_py.txt"
 
 # command to run tests
