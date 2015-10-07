@@ -5,7 +5,7 @@ python:
 # install system deps
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq requirements_apt.txt
+  - sudo apt-get install -y $(cat requirements_apt.txt | tr "\n" " ")
 
 # install python deps
 install: 
