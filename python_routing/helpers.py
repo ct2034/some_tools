@@ -16,12 +16,11 @@ def check_line(map, s, e):
       obststart = [edge[0][0],edge[0][1]]
     else: #end of obstacle
       obstacles.append([obststart, [edge[1][0],edge[1][1]]])
-        
     [ls[0], ls[1]] = [edge[1][0], edge[1][1]]
     edge = get_edge(map, line, dire, ls, e)
-      
   return obstacles
-  
+
+
 # Function to find the midpoints for a given obstacle
 def get_midpoint(map, obs, max_coord):
   middle = [(float(obs[0][0]))+(obs[1][0]-obs[0][0])/2, (float(obs[0][1]))+(obs[1][1]-obs[0][1])/2]
